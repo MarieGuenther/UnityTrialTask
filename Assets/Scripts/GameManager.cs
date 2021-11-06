@@ -13,9 +13,16 @@ public class GameManager : MonoBehaviour
     private EditMode _currentEditMode = EditMode.Camera;
 
     public static System.Action<GameMode> OnModeChange;
+    public static System.Action OnCharacterPlaced;
 
     private float _deformationStrength = 1, _deformationRadius = 1;
     private bool _deformationDirection = true;
+
+    private bool _characterPlaced = false;
+
+    [SerializeField]
+    private Transform _pointer = default;
+    public Transform Pointer { get => _pointer; }
 
     public float DeformationStrength
     {
@@ -40,6 +47,8 @@ public class GameManager : MonoBehaviour
     {
         get => _currentEditMode;
     }
+
+    public bool CharacterPlaced { get => _characterPlaced; }
 
     public void Awake()
     {
@@ -96,6 +105,13 @@ public class GameManager : MonoBehaviour
     public void ChangeDeformationDirection(bool in_value)
     {
         _deformationDirection = in_value;
+    }
+
+    public void ChangeCharacterPlaced(bool in_value)
+    {
+        _characterPlaced = in_value;
+        if (_characterPlaced)
+            OnCharacterPlaced();
     }
 
     private void OnDestroy()

@@ -10,7 +10,7 @@ public class MeshDeformation : MonoBehaviour
     private Mesh _mesh = default;
     private Vector3[] _originalVertices = default, _modifiedVertices = default;
     private bool _deformationDirection = true;
-
+    private Transform _pointer = default;
 
     private void Start()
     {
@@ -21,6 +21,8 @@ public class MeshDeformation : MonoBehaviour
         {
             _modifiedVertices[i] = _originalVertices[i];
         }
+
+        _pointer = GameManager.Instance.Pointer;
     }
 
     private void Update()
@@ -38,6 +40,8 @@ public class MeshDeformation : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out hit))
         {
+            _pointer.position = hit.point;
+
             _deformationStrength = GameManager.Instance.DeformationStrength;
             _radius = GameManager.Instance.DeformationRadius;
             _deformationDirection = GameManager.Instance.DeformationDirection;
@@ -60,6 +64,11 @@ public class MeshDeformation : MonoBehaviour
 
             RecalculateMesh();
         }
+        else
+        {
+            _pointer.position = new Vector3(1000, 1000);
+        }
+
     }
 
     private void RecalculateMesh()

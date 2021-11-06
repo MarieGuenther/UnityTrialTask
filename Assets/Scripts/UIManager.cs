@@ -11,22 +11,25 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _modeButtonText = default;
     [SerializeField]
-    private CanvasGroup _editUI = default, _terraformingUI = default, _playUI = default;
+    private CanvasGroup _editUI = default, _terraformingUI = default, _playUI = default, _joystick = default;
+    [SerializeField]
+    private Button _terraformingButton = default, _characterButton = default;
 
     [SerializeField]
     private Slider _strengthSlider = default, _radiusSlider = default;
     [SerializeField]
     private Toggle _directionToggle = default;
 
-    private bool _terraformingState = false;
-
     private void Start()
     {
         GameManager.OnModeChange += OnModeChangeHandler;
+        GameManager.OnCharacterPlaced += OnCharacterPlacedHandler;
         _terraformingUI.alpha = 0;
         _terraformingUI.blocksRaycasts = false;
         _playUI.alpha = 0;
         _playUI.blocksRaycasts = false;
+        _joystick.alpha = 0;
+        _joystick.blocksRaycasts = false;
 
         SetFromPlayerPrefValues();
     }
@@ -66,11 +69,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void OnCharacterPlacedHandler()
+    {
+        _joystick.alpha = 1;
+        _joystick.blocksRaycasts = true;
+    }
+
+    public void PressedCharacterButton()
+    {
+        if (GameManager.Instance.CurrentEditMode != GameManager.EditMode.CharacterSet)
+        {
+            TerraformUIHandler(false);
+            GameManager.Instance.ChangeEditMode(GameManager.EditMode.CharacterSet);
+        }
+        else
+        {
+            GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
+        }
+    }
+
     public void ShowTerraformingUI()
     {
-        _terraformingState = !_terraformingState;
+        
+        TerraformUIHandler(GameManager.Instance.CurrentEditMode != GameManager.EditMode.Terraforming);
+    }
+
+    private void TerraformUIHandler(bool in_value)
+    {
         _terraformingUI.DOKill(true);
-        if (_terraformingState)
+        if (in_value)
         {
             _terraformingUI.DOFade(1, 0.2f);
             _terraformingUI.blocksRaycasts = true;
@@ -84,5 +111,6 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
 
         }
+
     }
 }
