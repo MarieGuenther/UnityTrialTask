@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class MeshDeformation : MonoBehaviour
 {
-    [SerializeField]
     private float _radius = 2f;
-    [SerializeField]
     private float _deformationStrength = 2f;
 
     private Mesh _mesh = default;
     private Vector3[] _originalVertices = default, _modifiedVertices = default;
+    private bool _deformationDirection = true;
 
 
     private void Start()
@@ -26,7 +25,7 @@ public class MeshDeformation : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.CurrentMode == GameManager.GameMode.Edit && Input.GetMouseButton(0))
+        if (GameManager.Instance.CurrentMode == GameManager.GameMode.Edit && GameManager.Instance.CurrentEditMode == GameManager.EditMode.Terraforming && Input.GetMouseButton(0))
         {
             HandleInput();
         }
@@ -39,6 +38,10 @@ public class MeshDeformation : MonoBehaviour
 
         if (Physics.Raycast(inputRay, out hit))
         {
+            _deformationStrength = GameManager.Instance.DeformationStrength;
+            _radius = GameManager.Instance.DeformationRadius;
+            _deformationDirection = GameManager.Instance.DeformationDirection;
+
             for (int v = 0; v < _modifiedVertices.Length; v++)
             {
                 Vector3 distance = _modifiedVertices[v] - hit.point;
@@ -48,7 +51,10 @@ public class MeshDeformation : MonoBehaviour
 
                 if (distance.sqrMagnitude < _radius)
                 {
-                    _modifiedVertices[v] = _modifiedVertices[v] + (Vector3.up * force) / smoothingFactor;
+                    int direction = 1;
+                    if (!_deformationDirection)
+                        direction = -1;
+                    _modifiedVertices[v] = _modifiedVertices[v] + (Vector3.up * force * direction) / smoothingFactor;
                 }
             }
 
@@ -62,4 +68,5 @@ public class MeshDeformation : MonoBehaviour
         GetComponentInChildren<MeshCollider>().sharedMesh = _mesh;
         _mesh.RecalculateNormals();
     }
+
 }
