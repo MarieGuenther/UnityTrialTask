@@ -7,6 +7,8 @@ public class SkyManager : MonoBehaviour
 {
     public enum DaytimeEnum { morning, day, evening, night}
     private DaytimeEnum _currentDaytime = DaytimeEnum.day;
+    public enum City { London, Berlin, Moscow, NewYork, Hongkong, Sidney}
+    private City _currentCity = City.Berlin;
 
     [SerializeField]
     private Transform _directionalLight = default;
@@ -48,6 +50,12 @@ public class SkyManager : MonoBehaviour
         _directionalLight.rotation = Quaternion.Euler(details._sunRotation);
     }
 
+    public void ChangeCity(int in_cityIndex)
+    {
+        if (in_cityIndex < 0 || in_cityIndex >= 6)
+            return;
+        _currentCity = (City)in_cityIndex;
+    }
 
 }
 

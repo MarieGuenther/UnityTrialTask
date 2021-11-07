@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public enum GameMode { Edit, Play}
     private GameMode _currentMode = GameMode.Edit;
 
-    public enum EditMode { Camera, Terraforming, CharacterSet}
+    public enum EditMode { Camera, Terraforming, CharacterSet, CityChange}
     private EditMode _currentEditMode = EditMode.Camera;
 
     public static System.Action<GameMode> OnModeChange;

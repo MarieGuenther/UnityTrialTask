@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _modeButtonText = default;
     [SerializeField]
-    private CanvasGroup _editUI = default, _terraformingUI = default, _playUI = default, _joystick = default;
+    private CanvasGroup _editUI = default, _terraformingUI = default, _playUI = default, _cityChangeUI = default, _joystick = default;
     [SerializeField]
     private Button _terraformingButton = default, _characterButton = default;
 
@@ -30,6 +30,9 @@ public class UIManager : MonoBehaviour
         _playUI.blocksRaycasts = false;
         _joystick.alpha = 0;
         _joystick.blocksRaycasts = false;
+        _cityChangeUI.alpha = 0;
+        _cityChangeUI.blocksRaycasts = false;
+        
 
         SetFromPlayerPrefValues();
     }
@@ -80,6 +83,7 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.CurrentEditMode != GameManager.EditMode.CharacterSet)
         {
             TerraformUIHandler(false);
+            CityChangeUIHandler(false);
             GameManager.Instance.ChangeEditMode(GameManager.EditMode.CharacterSet);
         }
         else
@@ -88,9 +92,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void PressedCityChangeButton()
+    {
+        if (GameManager.Instance.CurrentEditMode != GameManager.EditMode.CityChange)
+        {
+            TerraformUIHandler(false);
+            CityChangeUIHandler(true);
+        }
+        else
+        {
+            CityChangeUIHandler(false);
+        }
+
+    }
+
     public void ShowTerraformingUI()
     {
-        
+        CityChangeUIHandler(false);
+
         TerraformUIHandler(GameManager.Instance.CurrentEditMode != GameManager.EditMode.Terraforming);
     }
 
@@ -108,6 +127,25 @@ public class UIManager : MonoBehaviour
         {
             _terraformingUI.DOFade(0, 0.2f);
             _terraformingUI.blocksRaycasts = false;
+            GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
+
+        }
+    }
+
+    private void CityChangeUIHandler(bool in_value)
+    {
+        _cityChangeUI.DOKill(true);
+        if (in_value)
+        {
+            _cityChangeUI.DOFade(1, 0.2f);
+            _cityChangeUI.blocksRaycasts = true;
+            GameManager.Instance.ChangeEditMode(GameManager.EditMode.CityChange);
+
+        }
+        else
+        {
+            _cityChangeUI.DOFade(0, 0.2f);
+            _cityChangeUI.blocksRaycasts = false;
             GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
 
         }
