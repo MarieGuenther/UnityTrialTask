@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,16 +8,23 @@ public class MobileCharacterController : MonoBehaviour
     [SerializeField]
     private CharacterController _unityCharacterController = default;
     [SerializeField]
+    private Camera _editCamera = default, _playCamera = default;
+    [SerializeField]
     private float _movementSpeed = 0.5f;
     private float gravity;
 
     [SerializeField]
     private Transform _pointer = default;
 
+    private Vector3 _originalPosition = default;
+
     private void Start()
     {
         //_pointer = GameManager.Instance.Pointer;
+        GameManager.OnModeChange += OnModeChangeHandler;
+
     }
+
 
     private void Update()
     {
@@ -57,4 +65,26 @@ public class MobileCharacterController : MonoBehaviour
         GameManager.Instance.ChangeCharacterPlaced(true);
         GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
     }
+
+    private void OnModeChangeHandler(GameManager.GameMode in_currentMode)
+    {
+        if(in_currentMode== GameManager.GameMode.Play)
+        {
+            if (GameManager.Instance.CharacterPlaced)
+            {
+                _playCamera.enabled = true;
+                _editCamera.enabled = false;
+            }
+            _originalPosition = transform.position;
+
+        }
+        else
+        {
+            _playCamera.enabled = false;
+            _editCamera.enabled = true;
+            transform.position = _originalPosition;
+
+        }
+    }
+
 }

@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowTerraformingUI()
     {
-        CityChangeUIHandler(false);
+        CityChangeUIHandler(false, false);
 
         TerraformUIHandler(GameManager.Instance.CurrentEditMode != GameManager.EditMode.Terraforming);
     }
@@ -132,21 +132,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void CityChangeUIHandler(bool in_value)
+    private void CityChangeUIHandler(bool in_value, bool in_changeMode = true)
     {
         _cityChangeUI.DOKill(true);
         if (in_value)
         {
             _cityChangeUI.DOFade(1, 0.2f);
             _cityChangeUI.blocksRaycasts = true;
-            GameManager.Instance.ChangeEditMode(GameManager.EditMode.CityChange);
+            if (in_changeMode)
+                GameManager.Instance.ChangeEditMode(GameManager.EditMode.CityChange);
 
         }
         else
         {
             _cityChangeUI.DOFade(0, 0.2f);
             _cityChangeUI.blocksRaycasts = false;
-            GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
+            if (in_changeMode)
+                GameManager.Instance.ChangeEditMode(GameManager.EditMode.Camera);
 
         }
 

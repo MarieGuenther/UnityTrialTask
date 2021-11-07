@@ -48,17 +48,17 @@ public class MeshDeformation : MonoBehaviour
 
             for (int v = 0; v < _modifiedVertices.Length; v++)
             {
-                Vector3 distance = _modifiedVertices[v] - hit.point;
+                Vector3 distance = (_modifiedVertices[v] ) - hit.point + transform.localPosition;
 
                 float smoothingFactor = 2f;
-                float force = _deformationStrength / (1f + hit.point.sqrMagnitude);
+                float force = _deformationStrength / (1f + (hit.point - transform.localPosition).sqrMagnitude);
 
                 if (distance.sqrMagnitude < _radius)
                 {
                     int direction = 1;
                     if (!_deformationDirection)
                         direction = -1;
-                    _modifiedVertices[v] = _modifiedVertices[v] + (Vector3.up * force * direction) / smoothingFactor;
+                    _modifiedVertices[v] = _modifiedVertices[v] + (transform.up * force * direction) / smoothingFactor;
                 }
             }
 
@@ -66,6 +66,8 @@ public class MeshDeformation : MonoBehaviour
         }
         else
         {
+            print("no");
+
             _pointer.position = new Vector3(1000, 1000);
         }
 
