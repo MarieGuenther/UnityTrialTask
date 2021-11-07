@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 3df037a9c113caa42a0a4ac748378ec8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1593,13 +1593,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.04923319, y: -0.2584826, z: 0.013191998, w: 0.96467036}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.8430004, y: -30.000002, z: 0}
 --- !u!1 &797056333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2423,7 +2423,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6381d88372c78f644b685359e6e81dae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2624,6 +2624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1470691470}
   - component: {fileID: 1470691469}
+  - component: {fileID: 1470691471}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2658,6 +2659,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1470691471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470691468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56a3ea63b4a19a442844ffca789915ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _directionalLight: {fileID: 705507995}
+  _morning:
+    _skyboxMaterial: {fileID: 2100000, guid: ca161c50d203cfa459fc8fd563293fbd, type: 2}
+    _sunRotation: {x: 172, y: -30, z: 0}
+  _day:
+    _skyboxMaterial: {fileID: 2100000, guid: 91498a94e75961f43b9828545e94586f, type: 2}
+    _sunRotation: {x: 115, y: -30, z: 0}
+  _evening:
+    _skyboxMaterial: {fileID: 2100000, guid: 3df037a9c113caa42a0a4ac748378ec8, type: 2}
+    _sunRotation: {x: 5, y: -30, z: 0}
+  _night:
+    _skyboxMaterial: {fileID: 2100000, guid: ab1fb07af333cf8448a3ee25f0664506, type: 2}
+    _sunRotation: {x: 55, y: -30, z: 0}
 --- !u!1 &1628994368
 GameObject:
   m_ObjectHideFlags: 0
