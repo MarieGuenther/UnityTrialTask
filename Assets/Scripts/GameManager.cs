@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("DeformationRadius"))
         {
-            PlayerPrefs.SetFloat("DeformationRadius", 1.5f);
+            PlayerPrefs.SetFloat("DeformationRadius", 2.5f);
         }
         _deformationStrength = PlayerPrefs.GetFloat("DeformationStrength");
         _deformationRadius = PlayerPrefs.GetFloat("DeformationRadius");
