@@ -20,7 +20,7 @@ public class GetCityByName
 [System.Serializable]
 public class WeatherData
 {
-    public int timestamp;
+    public double timestamp;
     public TemperatureData temperature;
     public SummaryData summary;
 }

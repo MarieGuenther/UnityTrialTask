@@ -51,7 +51,7 @@ public class MeshDeformation : MonoBehaviour
                 Vector3 distance = (_modifiedVertices[v] ) - hit.point + transform.localPosition;
 
                 float smoothingFactor = 2f;
-                float force = _deformationStrength / (1f + (hit.point - transform.localPosition).sqrMagnitude);
+                float force = _deformationStrength * 0.1f; /// (1f + (hit.point - transform.localPosition).sqrMagnitude);
 
                 if (distance.sqrMagnitude < _radius)
                 {
@@ -66,8 +66,6 @@ public class MeshDeformation : MonoBehaviour
         }
         else
         {
-            print("no");
-
             _pointer.position = new Vector3(1000, 1000);
         }
 

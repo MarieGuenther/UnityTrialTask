@@ -17,6 +17,7 @@ public class MobileCharacterController : MonoBehaviour
     private Transform _pointer = default;
 
     private Vector3 _originalPosition = default;
+    private bool _hitMesh = false;
 
     private void Start()
     {
@@ -25,6 +26,10 @@ public class MobileCharacterController : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        GameManager.OnModeChange -= OnModeChangeHandler;
+    }
 
     private void Update()
     {
@@ -38,7 +43,7 @@ public class MobileCharacterController : MonoBehaviour
         else if (GameManager.Instance.CurrentMode == GameManager.GameMode.Edit && GameManager.Instance.CurrentEditMode == GameManager.EditMode.CharacterSet)
         {
             CharacterPlacementCheck();
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && _hitMesh)
             {
                 PlaceCharacter();
             }
@@ -49,14 +54,16 @@ public class MobileCharacterController : MonoBehaviour
     {
         Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
-        if (Physics.Raycast(inputRay, out hit))
+        int layerMask = 1 << 8;
+        if (Physics.Raycast(inputRay, out hit, Mathf.Infinity, layerMask))
         {
-            _pointer.position = hit.point + _pointer.up * 2;
+            _pointer.position = hit.point + _pointer.up;
+            _hitMesh = true;
         }
         else
         {
             _pointer.position = new Vector3(1000, 1000);
+            _hitMesh = false;
         }
     }
 

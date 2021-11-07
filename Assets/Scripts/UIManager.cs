@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         GameManager.OnModeChange -= OnModeChangeHandler;
+        GameManager.OnCharacterPlaced -= OnCharacterPlacedHandler;
     }
 
     private void SetFromPlayerPrefValues()

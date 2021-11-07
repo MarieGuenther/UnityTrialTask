@@ -62,8 +62,21 @@ public class GameManager : MonoBehaviour
         SetFromPlayerPrefValues();
     }
 
+    public void ResetPlane()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
     private void SetFromPlayerPrefValues()
     {
+        if (!PlayerPrefs.HasKey("DeformationStrength"))
+        {
+            PlayerPrefs.SetFloat("DeformationStrength", 0.535f);
+        }
+        if (!PlayerPrefs.HasKey("DeformationRadius"))
+        {
+            PlayerPrefs.SetFloat("DeformationRadius", 1.5f);
+        }
         _deformationStrength = PlayerPrefs.GetFloat("DeformationStrength");
         _deformationRadius = PlayerPrefs.GetFloat("DeformationRadius");
         if (PlayerPrefs.GetInt("DeformationDirection") == 1)
